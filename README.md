@@ -52,39 +52,31 @@ The static files will be in the `out/` directory.
 
 ## Deploying to GitHub Pages
 
-The GitHub Actions workflow is already set up! Follow these steps:
+The GitHub Actions workflow is already set up! The `basePath` configuration is automatically handled:
+- **Local development**: Works at `localhost:3000` (no basePath)
+- **GitHub Pages**: Automatically uses `/Brothers-Surprise` basePath when building in CI
 
-### Step 1: Update next.config.js (if needed)
-
-**Important:** Only uncomment `basePath` and `assetPrefix` if your repository is NOT named `username.github.io`.
-
-- **If your repo is `username.github.io`**: Leave them commented (deploys to root URL)
-- **If your repo is a project repo** (like `Brothers-Surprise`): Uncomment and update:
-
-```javascript
-basePath: '/Brothers-Surprise',  // Replace with your actual repo name
-assetPrefix: '/Brothers-Surprise',
-```
-
-### Step 2: Enable GitHub Pages in Repository Settings
+### Step 1: Enable GitHub Pages in Repository Settings
 
 1. Go to your GitHub repository
 2. Click **Settings** → **Pages** (in the left sidebar)
 3. Under **Source**, select **"GitHub Actions"** (NOT "Deploy from a branch")
 4. Save the settings
 
-### Step 3: Push to GitHub
+### Step 2: Push to GitHub
 
 ```bash
 git add .
 git commit -m "Setup GitHub Pages deployment"
-git push origin main
+git push origin first_code
 ```
 
+(Or push to `main` if that's your default branch)
+
 The GitHub Action will automatically:
-- Build your Next.js site
+- Build your Next.js site with the correct basePath for GitHub Pages
 - Deploy it to GitHub Pages
-- Update on every push to `main` branch
+- Update on every push to `first_code` or `main` branch
 
 Your site will be available at:
 - `https://username.github.io/Brothers-Surprise` (if using basePath)
