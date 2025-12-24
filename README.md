@@ -52,84 +52,45 @@ The static files will be in the `out/` directory.
 
 ## Deploying to GitHub Pages
 
-### Step 1: Update next.config.js
+The GitHub Actions workflow is already set up! Follow these steps:
 
-Uncomment and update the `basePath` and `assetPrefix` in `next.config.js` with your repository name:
+### Step 1: Update next.config.js (if needed)
+
+**Important:** Only uncomment `basePath` and `assetPrefix` if your repository is NOT named `username.github.io`.
+
+- **If your repo is `username.github.io`**: Leave them commented (deploys to root URL)
+- **If your repo is a project repo** (like `Brothers-Surprise`): Uncomment and update:
 
 ```javascript
-basePath: '/your-repo-name',
-assetPrefix: '/your-repo-name',
+basePath: '/Brothers-Surprise',  // Replace with your actual repo name
+assetPrefix: '/Brothers-Surprise',
 ```
 
-### Step 2: Create GitHub Actions Workflow
+### Step 2: Enable GitHub Pages in Repository Settings
 
-Create `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build
-        run: npm run build
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './out'
-      
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
-
-### Step 3: Enable GitHub Pages
-
-1. Go to your repository settings
-2. Navigate to "Pages" in the left sidebar
-3. Under "Source", select "GitHub Actions"
+1. Go to your GitHub repository
+2. Click **Settings** → **Pages** (in the left sidebar)
+3. Under **Source**, select **"GitHub Actions"** (NOT "Deploy from a branch")
 4. Save the settings
 
-### Step 4: Push to GitHub
+### Step 3: Push to GitHub
 
 ```bash
 git add .
-git commit -m "Initial commit"
+git commit -m "Setup GitHub Pages deployment"
 git push origin main
 ```
 
-The GitHub Action will automatically build and deploy your site!
+The GitHub Action will automatically:
+- Build your Next.js site
+- Deploy it to GitHub Pages
+- Update on every push to `main` branch
+
+Your site will be available at:
+- `https://username.github.io/Brothers-Surprise` (if using basePath)
+- `https://username.github.io` (if repo is `username.github.io`)
+
+**Note:** The first deployment may take a few minutes. You can check the status in the **Actions** tab of your repository.
 
 ## Customization
 
