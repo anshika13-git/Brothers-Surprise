@@ -8,6 +8,7 @@ export default function Home() {
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
   // Birthday memories images
+  // Using absolute paths - Next.js will automatically prefix with basePath when configured
   const images = [
     '/images/WhatsApp Image 2025-12-24 at 5.13.39 PM (1).jpeg',
     '/images/WhatsApp Image 2025-12-24 at 5.13.39 PM (2).jpeg',

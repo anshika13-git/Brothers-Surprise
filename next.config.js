@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
-// Use basePath only for GitHub Pages builds (CI environment)
-// For local dev (npm run dev), basePath is empty so it works at localhost:3000
-const isGitHubPages = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
-const basePath = isGitHubPages ? '/Brothers-Surprise' : '';
+// Use basePath for production builds (GitHub Pages)
+// For local dev (npm run dev), basePath won't interfere
+const isProduction = process.env.NODE_ENV === 'production';
+const useBasePath = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+const basePath = useBasePath ? '/Brothers-Surprise' : '';
 
 const nextConfig = {
   // Static export for GitHub Pages (doesn't affect 'next dev', only 'next build')
@@ -10,7 +11,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // For GitHub Pages - required for project repos (only set in CI/builds)
+  // For GitHub Pages - required for project repos
+  // Next.js automatically prefixes all paths starting with '/' with basePath
   ...(basePath && {
     basePath,
     assetPrefix: basePath,
