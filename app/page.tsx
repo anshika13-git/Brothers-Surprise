@@ -8,15 +8,21 @@ export default function Home() {
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
   // Birthday memories images
-  // Using absolute paths - Next.js will automatically prefix with basePath when configured
-  const images = [
-    '/images/WhatsApp Image 2025-12-24 at 5.13.39 PM (1).jpeg',
-    '/images/WhatsApp Image 2025-12-24 at 5.13.39 PM (2).jpeg',
-    '/images/WhatsApp Image 2025-12-24 at 5.13.39 PM.jpeg',
-    '/images/WhatsApp Image 2025-12-24 at 5.13.40 PM (1).jpeg',
-    '/images/WhatsApp Image 2025-12-24 at 5.13.40 PM.jpeg',
-    '/images/WhatsApp Image 2025-12-24 at 5.13.43 PM.jpeg',
+  // URL encode filenames to handle spaces and special characters
+  const imageFilenames = [
+    'WhatsApp Image 2025-12-24 at 5.13.39 PM (1).jpeg',
+    'WhatsApp Image 2025-12-24 at 5.13.39 PM (2).jpeg',
+    'WhatsApp Image 2025-12-24 at 5.13.39 PM.jpeg',
+    'WhatsApp Image 2025-12-24 at 5.13.40 PM (1).jpeg',
+    'WhatsApp Image 2025-12-24 at 5.13.40 PM.jpeg',
+    'WhatsApp Image 2025-12-24 at 5.13.43 PM.jpeg',
   ];
+  
+  // Create properly encoded image paths
+  // Next.js will automatically prefix with basePath when configured
+  const images = imageFilenames.map(filename => 
+    `/images/${encodeURIComponent(filename)}`
+  );
 
   // Audio files - add your birthday music here
   // For now, leaving empty - add files to public/audio/ and update this array
