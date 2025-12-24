@@ -6,9 +6,9 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+  const [images, setImages] = useState<string[]>([]);
 
-  // Birthday memories images
-  // URL encode filenames to handle spaces and special characters
+  // Birthday memories image filenames
   const imageFilenames = [
     'WhatsApp Image 2025-12-24 at 5.13.39 PM (1).jpeg',
     'WhatsApp Image 2025-12-24 at 5.13.39 PM (2).jpeg',
@@ -17,12 +17,27 @@ export default function Home() {
     'WhatsApp Image 2025-12-24 at 5.13.40 PM.jpeg',
     'WhatsApp Image 2025-12-24 at 5.13.43 PM.jpeg',
   ];
-  
-  // Create properly encoded image paths
-  // Next.js will automatically prefix with basePath when configured
-  const images = imageFilenames.map(filename => 
-    `/images/${encodeURIComponent(filename)}`
-  );
+
+  // Set up image paths after mount (to detect basePath from window.location)
+  useEffect(() => {
+    // Detect basePath from current location (for GitHub Pages)
+    let basePath = '';
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path.startsWith('/Brothers-Surprise')) {
+        basePath = '/Brothers-Surprise';
+      }
+    }
+    
+    // Create image paths with basePath prefix and URL encoding
+    const imagePaths = imageFilenames.map(filename => {
+      const encodedFilename = encodeURIComponent(filename);
+      return `${basePath}/images/${encodedFilename}`;
+    });
+    
+    setImages(imagePaths);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // imageFilenames is constant, no need to include in deps
 
   // Audio files - add your birthday music here
   // For now, leaving empty - add files to public/audio/ and update this array
