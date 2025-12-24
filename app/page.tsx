@@ -99,7 +99,7 @@ export default function Home() {
       {/* Birthday Header Banner */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-red-600 via-pink-600 to-red-600 text-white py-3 px-4 text-center shadow-lg">
         <p className="text-lg md:text-2xl font-bold animate-pulse">
-          🎂 Happy {age}th Birthday! 🎄 Born: December 25, 2005 🎂
+          Happy Birthday to the one who shares all my secrets and crimes 😄💙 🎂
         </p>
       </div>
 
